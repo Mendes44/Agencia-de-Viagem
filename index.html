@@ -1,190 +1,330 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="description" content="A Agência de Viagens encontra o hotel certo pra você!">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Agência de viagens</title>
-        <link rel="stylesheet" href="css/estilo.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@200;300&amp;display=swap">
-    </head>
-    <body>
-        <header>
-            <div class="topo limite-largura">
-                <img class="topo-logo" src="imagens/local-logo.png" title="Logo da agência" alt="Logo da agência">
-                <p class="topo-titulo">Agência de Viagens</p>
-            </div>
-        </header>
-        <main>
-            <section class="orcamento-fundo">
-                <div class="orcamento-area limite-largura">
-                    <div class="orcamento-cabecalho">
-                        <img class="orcamento-logo" src="imagens/aviao.png" title="Ícone do avião" alt="Ícone do aviao">
-                        <h1 class="orcamento-descricao">Solicite um orçamento</h1>
+<html lang="pt-BR">
+<head>
+    <!-- Configurações básicas de codificação e responsividade. -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#171c35">
+
+    <!-- SEO: personalize domínio, marca e localidade antes de publicar para um cliente. -->
+    <title>VivaTrip | Pacotes de Viagem e Experiências pelo Brasil</title>
+    <meta name="description" content="Encontre pacotes de viagem, hospedagens e experiências inesquecíveis pelo Brasil. Solicite uma cotação personalizada com a VivaTrip.">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="author" content="VivaTrip Agência de Viagens">
+    <link rel="canonical" href="https://www.vivatrip.com.br/">
+
+    <!-- Open Graph: melhora a aparência do link no WhatsApp, Facebook e LinkedIn. -->
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="VivaTrip">
+    <meta property="og:title" content="VivaTrip | Sua próxima viagem começa aqui">
+    <meta property="og:description" content="Roteiros personalizados, atendimento humano e experiências selecionadas para você viajar sem preocupação.">
+    <meta property="og:url" content="https://www.vivatrip.com.br/">
+    <meta property="og:image" content="https://www.vivatrip.com.br/imagens/og-vivatrip.png">
+    <meta property="og:image:alt" content="Paisagem brasileira apresentada pela agência de viagens VivaTrip">
+
+    <!-- Twitter Card: define a prévia para X e plataformas compatíveis. -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="VivaTrip | Sua próxima viagem começa aqui">
+    <meta name="twitter:description" content="Pacotes e roteiros personalizados para descobrir o melhor do Brasil.">
+    <meta name="twitter:image" content="https://www.vivatrip.com.br/imagens/og-vivatrip.png">
+
+    <!-- Conexões antecipadas reduzem o tempo de carregamento da fonte. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Playfair+Display:ital,wght@1,600&amp;display=swap">
+    <link rel="stylesheet" href="css/estilo.css">
+
+    <!-- Dados estruturados ajudam buscadores a entender que o site representa uma agência. -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "TravelAgency",
+        "name": "VivaTrip",
+        "url": "https://www.vivatrip.com.br/",
+        "logo": "https://www.vivatrip.com.br/imagens/local-logo.png",
+        "image": "https://www.vivatrip.com.br/imagens/og-vivatrip.png",
+        "description": "Agência especializada em pacotes de viagem e roteiros personalizados pelo Brasil.",
+        "telephone": "+55-21-99999-9999",
+        "email": "contato@vivatrip.com.br",
+        "priceRange": "$$",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Rio de Janeiro",
+            "addressRegion": "RJ",
+            "addressCountry": "BR"
+        },
+        "sameAs": ["https://www.instagram.com/vivatrip"]
+    }
+    </script>
+</head>
+<body>
+    <!-- Link de acessibilidade exibido quando recebe foco pelo teclado. -->
+    <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
+
+    <!-- Cabeçalho fixo com navegação principal e menu sanduíche no celular. -->
+    <header class="cabecalho" id="inicio">
+        <div class="container navegacao">
+            <a class="marca" href="#inicio" aria-label="VivaTrip - página inicial">
+                <span class="marca-icone" aria-hidden="true">✦</span>
+                <span>Viva<span>Trip</span></span>
+            </a>
+
+            <!-- O atributo aria-expanded é atualizado pelo JavaScript. -->
+            <button class="menu-botao" type="button" aria-label="Abrir menu" aria-controls="menu-principal" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="menu" id="menu-principal" aria-label="Navegação principal">
+                <a href="#destinos">Destinos</a>
+                <a href="#experiencias">Experiências</a>
+                <a href="#vantagens">Por que nós?</a>
+                <a href="#depoimentos">Depoimentos</a>
+                <a class="botao botao-menu" href="#orcamento">Planejar viagem</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="conteudo">
+        <!-- Hero: combina proposta de valor com o formulário principal de captação. -->
+        <section class="hero" id="orcamento" aria-labelledby="titulo-principal">
+            <div class="hero-sobreposicao"></div>
+            <div class="container hero-grid">
+                <div class="hero-conteudo">
+                    <p class="etiqueta etiqueta-clara">Especialistas em viagens pelo Brasil</p>
+                    <h1 id="titulo-principal">Colecione histórias, <em>não apenas destinos.</em></h1>
+                    <p class="hero-texto">Criamos roteiros do seu jeito, com atendimento próximo e escolhas seguras para você aproveitar cada momento.</p>
+                    <div class="hero-beneficios" aria-label="Principais benefícios">
+                        <span>✓ Atendimento personalizado</span>
+                        <span>✓ Suporte durante a viagem</span>
                     </div>
-                    <div class="orcamento-area-formulario">
-                        <h2 class="orcamento-subtitulo-formulario">Informe seus dados</h2>
-                        <form method="post" class="formulario" action="https://www.devmedia.com.br/codigos/missao/front-end/agencia-de-viagens/">
+                </div>
+
+                <!--
+                    Formulário preparado para futura integração com Supabase.
+                    O atributo data-lead-form permite encontrá-lo no JavaScript sem depender do visual.
+                -->
+                <div class="formulario-card">
+                    <div class="formulario-cabecalho">
+                        <span class="formulario-icone" aria-hidden="true">✈</span>
+                        <div>
+                            <p>Comece por aqui</p>
+                            <h2>Planeje sua próxima viagem</h2>
+                        </div>
+                    </div>
+
+                    <form class="formulario" data-lead-form novalidate>
+                        <!-- Identifica a origem do lead quando o Supabase for integrado. -->
+                        <input type="hidden" name="origem_lead" value="landing-page-vivatrip">
+
+                        <div class="campo campo-completo">
                             <label for="nome">Nome</label>
-                            <input id="nome" type="text" name="nome" placeholder="Nome completo" required>
-                            <label for="email">Email</label>
-                            <input id="email" type="email" name="email" placeholder="Email para contato" required>
-                            <label for="celular">Celular</label>
-                            <input id="celular" type="tel" pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}" name="celular" placeholder="(xx) xxxxx-xxxx" required>
-                            <div class="formulario-campo-duplo">
-                                <div>
-                                    <label for="ida">Data da ida</label>
-                                    <input id="ida" type="date" name="partida">
-                                </div>
-                                <div>
-                                    <label for="volta">Data da volta</label>
-                                    <input id="volta" type="date" name="chegada">
-                                </div>
-                            </div>
-                            <div class="formulario-campo-duplo">
-                                <div>
-                                    <label for="origem">Origem</label>
-                                    <select id="origem" name="origem">
-                                        <option selected>Partindo de</option>
-                                        <option value="AM">Amazonas</option>
-                                        <option value="RJ">Rio de Janeiro</option>
-                                        <option value="SP">São Paulo</option>
-                                        <option value="GO">Goias</option>
-                                        <option value="MA">Maranhão</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label for="destino">Destino</label>
-                                    <select id="destino" name="destino">
-                                        <option selected>Indo para</option>
-                                        <option value="AM">Amazonas</option>
-                                        <option value="RJ">Rio de Janeiro</option>
-                                        <option value="SP">São Paulo</option>
-                                        <option value="GO">Goias</option>
-                                        <option value="MA">Maranhão</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <label>Quarto com cama infantil?</label>
-                            <div class="radio">
-                                <div>
-                                    <input id="infantil-sim" type="radio" name="infantil" value="s">
-                                    <label for="infantil-sim">Sim</label>
-                                </div>
-                                <div>
-                                    <input id="infantil-nao" type="radio" name="infantil" value="n">
-                                    <label for="infantil-nao">Não</label>
-                                </div>
-                            </div>
-                            <label>Preferências da hospedagem</label>
-                            <div class="radio">
-                                <div>
-                                    <input id="piscina" type="checkbox" name="preferencias[]" value="piscina">
-                                    <label for="piscina">Piscina</label>
-                                </div>
-                                <div>
-                                    <input id="wifi" type="checkbox" name="preferencias[]" value="wifi">
-                                    <label for="wifi">Wi-Fi</label>
-                                </div>
-                                <div>
-                                    <input id="garagem" type="checkbox" name="preferencias[]" value="garagem">
-                                    <label for="garagem">Garagem</label>
-                                </div>
-                                <div>
-                                    <input id="suite" type="checkbox" name="preferencias[]" value="suite">
-                                    <label for="suite">Suite</label>
-                                </div>
-                            </div>
-                            <button type="submit">Solicitar orçamento</button>
-                        </form>
-                    </div>
-                </div>
-            </section>
-
-            <section class="ofertas-area limite-largura">
-                <h2 class="ofertas-titulo">Ofertas</h2>
-                <h3 class="ofertas-descricao">Com até <span>50%</span> de desconto.</h3>
-                <div class="ofertas-imagens">
-                    <figure class="oferta-imagem-destaque">
-                        <img src="imagens/rio.jpg" alt="Rio de Janeiro - Ciadade Maravilhosa" title="Rio de Janeiro - Brasil">
-                        <figcaption>Rio de Janeiro</figcaption>
-                    </figure>
-                    <div class="oferta-quatro-imagens">
-                        <figure>
-                            <img src="imagens/manaus.jpg" alt="Manaus" title="Manaus">
-                            <figcaption>Manaus</figcaption>
-                        </figure>
-                        <figure>
-                            <img src="imagens/niteroi.jpg" alt="Ponte Rio-Niterói" title="Ponte Rio-Niterói - RJ">
-                            <figcaption>Rio de Janeiro</figcaption>
-                        </figure>
-                        <figure>
-                            <img src="imagens/saopaulo.jpg" alt="São Paulo - SP" title="São Paulo - Brasil">
-                            <figcaption>São Paulo</figcaption>
-                        </figure>
-                        <figure>
-                            <img src="imagens/maranhao.jpg" alt="Maranhão" title="Maranhão - Brasil">
-                            <figcaption>Maranhão</figcaption>
-                        </figure>
-                    </div>
-                </div>
-            </section>
-
-            <section class="natureza-area limite-largura">
-                <h2 class="natureza-titulo">Explore a Natureza</h2>
-                <h3 class="natureza-descricao">Viaje conosco e veja o melhor que a natureza tem a oferecer.</h3>
-                <div class="natureza-duas-imagens">
-                    <figure class="natureza-imagem">
-                        <img src="imagens/lencol.jpg" alt="Lençois Maranhenses - Brasil" title="Lençois Maranhenses - Brasil">
-                        <div>
-                            <h3>Lençois Maranhenses, Brasil</h3>
-                            <p>Ida e volta a partir de R$79</p>
+                            <input id="nome" type="text" name="nome" autocomplete="name" placeholder="Como podemos chamar você?" required>
                         </div>
-                    </figure>
-                    <figure class="natureza-imagem">
-                        <img src="imagens/goias.jpg" alt="Cachoeira Santa bárbara - GO" title="Cachoeira Santa Bárbara - GO">
-                        <div>
-                            <h3>Cachoeira Santa Bárbara, Brasil</h3>
-                            <p>Ida e volta por R$139</p>
-                        </div>
-                    </figure>
-                </div>
-            </section>
 
-        </main>
-        <footer>
-            <div class="rodape limite-largura">
-                <div class="rodape-conteudo">
-                    <h2>Contato</h2>
-                    <div>
-                        <img src="imagens/local.png" title="Ícone local" alt="Ícone local">
-                        <span>Rio de Janeiro, RJ</span>
-                    </div>
-                    <div>
-                        <img src="imagens/telefone.png" title="Ícone telefone" alt="Ícone telefone">
-                        <span>Telefone: (21) 9999-9999</span>
-                    </div>
-                    <div>
-                        <img src="imagens/email.png" title="Ícone email" alt="Ícone email">
-                        <span>Email: contato@agencia.com.br</span>
-                    </div>
-                </div>
-                <div class="rodape-conteudo">
-                    <h2>Nossas Redes Sociais</h2>
-                    <div>
-                        <img src="imagens/fb.png" title="Ícone facebook" alt="Ícone facebook">
-                        <span>/AgenciaDeViagem</span>
-                    </div>
-                    <div>
-                        <img src="imagens/ig.png" title="Ícone instagram" alt="Ícone instagram">
-                        <span>@AgenciaDeViagem</span>
-                    </div>
-                    <div>
-                        <img src="imagens/tt.png" title="Ícone twitter" alt="Ícone twitter">
-                        <span>@AgenciaDeViagem</span>
-                    </div>
+                        <div class="formulario-linha">
+                            <div class="campo">
+                                <label for="email">E-mail</label>
+                                <input id="email" type="email" name="email" autocomplete="email" placeholder="voce@email.com" required>
+                            </div>
+                            <div class="campo">
+                                <label for="celular">WhatsApp</label>
+                                <input id="celular" type="tel" name="celular" autocomplete="tel" inputmode="tel" placeholder="(21) 99999-9999" required>
+                            </div>
+                        </div>
+
+                        <div class="formulario-linha">
+                            <div class="campo">
+                                <label for="destino">Destino desejado</label>
+                                <select id="destino" name="destino" required>
+                                    <option value="" selected disabled>Escolha um destino</option>
+                                    <option value="rio-de-janeiro">Rio de Janeiro</option>
+                                    <option value="lencois-maranhenses">Lençóis Maranhenses</option>
+                                    <option value="chapada-dos-veadeiros">Chapada dos Veadeiros</option>
+                                    <option value="amazonia">Amazônia</option>
+                                    <option value="outro">Ainda não decidi</option>
+                                </select>
+                            </div>
+                            <div class="campo">
+                                <label for="data-viagem">Quando pretende viajar?</label>
+                                <input id="data-viagem" type="month" name="data_viagem" required>
+                            </div>
+                        </div>
+
+                        <label class="consentimento" for="consentimento">
+                            <input id="consentimento" type="checkbox" name="consentimento" required>
+                            <span>Concordo em receber contato sobre esta cotação.</span>
+                        </label>
+
+                        <button class="botao botao-principal" type="submit">Receber cotação gratuita <span aria-hidden="true">→</span></button>
+                        <p class="formulario-seguranca"><span aria-hidden="true">⌾</span> Seus dados estão seguros. Não enviamos spam.</p>
+                        <!-- Mensagens de validação e sucesso são anunciadas por leitores de tela. -->
+                        <p class="formulario-status" data-form-status role="status" aria-live="polite"></p>
+                    </form>
                 </div>
             </div>
-        </footer>
-    </body>
+        </section>
+
+        <!-- Faixa de confiança: reforça credibilidade logo após o primeiro contato. -->
+        <section class="prova-social" aria-label="Números da agência">
+            <div class="container numeros">
+                <div><strong>+5 mil</strong><span>viajantes felizes</span></div>
+                <div><strong>12 anos</strong><span>criando histórias</span></div>
+                <div><strong>4,9/5</strong><span>avaliação dos clientes</span></div>
+                <div><strong>24h</strong><span>de suporte em viagem</span></div>
+            </div>
+        </section>
+
+        <!-- Destinos em destaque com imagens existentes otimizadas pelo carregamento tardio. -->
+        <section class="secao destinos" id="destinos" aria-labelledby="titulo-destinos">
+            <div class="container">
+                <div class="secao-cabecalho">
+                    <div>
+                        <p class="etiqueta">Destinos em destaque</p>
+                        <h2 id="titulo-destinos">O Brasil que merece ser vivido</h2>
+                    </div>
+                    <p>Selecionamos paisagens, experiências e hospedagens para transformar seus dias de descanso em memórias inesquecíveis.</p>
+                </div>
+
+                <div class="grade-destinos">
+                    <a class="destino-card destino-destaque" href="#orcamento">
+                        <img src="imagens/rio.jpg" alt="Vista aérea do Rio de Janeiro entre mar e montanhas" width="1600" height="1200" loading="lazy">
+                        <span class="destino-gradiente"></span>
+                        <span class="destino-conteudo"><small>Rio de Janeiro</small><strong>Cidade Maravilhosa</strong><em>A partir de R$ 1.490</em></span>
+                    </a>
+                    <a class="destino-card" href="#orcamento">
+                        <img src="imagens/manaus.jpg" alt="Encontro das águas próximo a Manaus, Amazonas" width="2048" height="1253" loading="lazy">
+                        <span class="destino-gradiente"></span>
+                        <span class="destino-conteudo"><small>Amazonas</small><strong>Encantos da Amazônia</strong><em>A partir de R$ 2.190</em></span>
+                    </a>
+                    <a class="destino-card" href="#orcamento">
+                        <img src="imagens/maranhao.jpg" alt="Lagoas entre dunas nos Lençóis Maranhenses" width="750" height="541" loading="lazy">
+                        <span class="destino-gradiente"></span>
+                        <span class="destino-conteudo"><small>Maranhão</small><strong>Lençóis Maranhenses</strong><em>A partir de R$ 1.890</em></span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experiências: mostra que a agência vende vivências, não apenas passagens. -->
+        <section class="secao experiencias" id="experiencias" aria-labelledby="titulo-experiencias">
+            <div class="container">
+                <div class="secao-cabecalho secao-cabecalho-central">
+                    <div>
+                        <p class="etiqueta">Viaje do seu jeito</p>
+                        <h2 id="titulo-experiencias">Experiências para cada história</h2>
+                    </div>
+                    <p>Escolha a inspiração e nós cuidamos do roteiro, reservas e detalhes.</p>
+                </div>
+
+                <div class="grade-experiencias">
+                    <article class="experiencia-card"><span aria-hidden="true">☀</span><h3>Praia &amp; descanso</h3><p>Hotéis selecionados e dias leves à beira-mar.</p></article>
+                    <article class="experiencia-card"><span aria-hidden="true">⌁</span><h3>Natureza &amp; aventura</h3><p>Trilhas, cachoeiras e paisagens fora do comum.</p></article>
+                    <article class="experiencia-card"><span aria-hidden="true">♡</span><h3>Romance a dois</h3><p>Roteiros especiais para celebrar bons momentos.</p></article>
+                    <article class="experiencia-card"><span aria-hidden="true">♙</span><h3>Viagem em família</h3><p>Diversão, conforto e segurança para todas as idades.</p></article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Diferenciais da agência apresentados junto de uma imagem editorial. -->
+        <section class="secao vantagens" id="vantagens" aria-labelledby="titulo-vantagens">
+            <div class="container vantagens-grid">
+                <div class="vantagens-imagem">
+                    <img src="imagens/lencol.jpg" alt="Viajante contemplando as lagoas dos Lençóis Maranhenses" width="1500" height="1125" loading="lazy">
+                    <span class="vantagens-selo"><strong>100%</strong> personalizado</span>
+                </div>
+                <div class="vantagens-conteudo">
+                    <p class="etiqueta">Por que viajar com a VivaTrip?</p>
+                    <h2 id="titulo-vantagens">Você sonha. A gente cuida dos detalhes.</h2>
+                    <p class="vantagens-intro">Da primeira conversa até a volta para casa, você conta com especialistas de verdade — sem roteiros genéricos e sem surpresas.</p>
+                    <ul class="lista-vantagens">
+                        <li><span>01</span><div><h3>Roteiro feito para você</h3><p>Preferências, ritmo e orçamento orientam cada escolha.</p></div></li>
+                        <li><span>02</span><div><h3>Curadoria de confiança</h3><p>Parceiros e hospedagens avaliados pela nossa equipe.</p></div></li>
+                        <li><span>03</span><div><h3>Suporte antes, durante e depois</h3><p>Uma pessoa de verdade pronta para ajudar quando precisar.</p></div></li>
+                    </ul>
+                    <a class="botao botao-contorno" href="#orcamento">Criar meu roteiro</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Depoimentos ajudam na conversão e podem ser substituídos por avaliações reais. -->
+        <section class="secao depoimentos" id="depoimentos" aria-labelledby="titulo-depoimentos">
+            <div class="container">
+                <div class="secao-cabecalho secao-cabecalho-central">
+                    <div>
+                        <p class="etiqueta">Histórias reais</p>
+                        <h2 id="titulo-depoimentos">Quem viaja com a gente, recomenda</h2>
+                    </div>
+                </div>
+                <div class="grade-depoimentos">
+                    <blockquote>
+                        <div class="estrelas" aria-label="5 de 5 estrelas">★★★★★</div>
+                        <p>“Foi a viagem mais tranquila que já fizemos. O roteiro tinha a nossa cara e o suporte fez toda a diferença.”</p>
+                        <footer><strong>Ana e Rodrigo</strong><span>Lua de mel em Fernando de Noronha</span></footer>
+                    </blockquote>
+                    <blockquote>
+                        <div class="estrelas" aria-label="5 de 5 estrelas">★★★★★</div>
+                        <p>“Viajar com crianças parecia complicado, mas a equipe pensou em cada detalhe. Voltamos querendo o próximo destino.”</p>
+                        <footer><strong>Família Martins</strong><span>Férias em Maceió</span></footer>
+                    </blockquote>
+                    <blockquote>
+                        <div class="estrelas" aria-label="5 de 5 estrelas">★★★★★</div>
+                        <p>“Atendimento próximo, sugestões excelentes e tudo organizado. Só precisei arrumar a mala e aproveitar.”</p>
+                        <footer><strong>Marcos Oliveira</strong><span>Aventura na Chapada dos Veadeiros</span></footer>
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chamada final recupera visitantes que chegaram ao fim sem preencher o formulário. -->
+        <section class="chamada-final" aria-labelledby="titulo-chamada">
+            <div class="container chamada-conteudo">
+                <div>
+                    <p class="etiqueta etiqueta-clara">Sua próxima história começa agora</p>
+                    <h2 id="titulo-chamada">Qual destino está chamando você?</h2>
+                    <p>Conte seus planos. Em até um dia útil, nossa equipe prepara os próximos passos.</p>
+                </div>
+                <a class="botao botao-claro" href="#orcamento">Quero planejar minha viagem <span aria-hidden="true">↑</span></a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Rodapé semântico com dados de contato que também aparecem no JSON-LD. -->
+    <footer class="rodape">
+        <div class="container rodape-grid">
+            <div class="rodape-marca">
+                <a class="marca marca-rodape" href="#inicio"><span class="marca-icone" aria-hidden="true">✦</span><span>Viva<span>Trip</span></span></a>
+                <p>Viagens personalizadas para você conhecer o Brasil com segurança, conforto e histórias para contar.</p>
+            </div>
+            <div class="rodape-coluna">
+                <h2>Navegue</h2>
+                <a href="#destinos">Destinos</a>
+                <a href="#experiencias">Experiências</a>
+                <a href="#vantagens">Por que nós?</a>
+            </div>
+            <div class="rodape-coluna">
+                <h2>Atendimento</h2>
+                <a href="tel:+5521999999999">(21) 99999-9999</a>
+                <a href="mailto:contato@vivatrip.com.br">contato@vivatrip.com.br</a>
+                <p>Segunda a sexta, 9h às 18h</p>
+            </div>
+            <div class="rodape-coluna">
+                <h2>Redes sociais</h2>
+                <a href="#">Instagram</a>
+                <a href="#">Facebook</a>
+                <a href="#">Pinterest</a>
+            </div>
+        </div>
+        <div class="container rodape-final">
+            <p>© <span data-ano></span> VivaTrip. Todos os direitos reservados.</p>
+            <p>CNPJ: 00.000000.00-0</p>
+            <p>Desenvolvido por <strong>Marcos Mendes</strong></p>
+        </div>
+    </footer>
+
+    <!-- Script carregado ao final e com defer para não bloquear a renderização. -->
+    <script src="js/script.js" defer></script>
+</body>
 </html>

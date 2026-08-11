@@ -1,367 +1,1160 @@
+/* ================================================================
+   1. VARIÁVEIS DE DESIGN
+   Centralizar cores, sombras e medidas facilita futuras alterações.
+   ================================================================ */
+:root {
+    --azul: #171c35;
+    --azul-claro: #222b50;
+    --laranja: #f16b3f;
+    --laranja-escuro: #d95127;
+    --areia: #f5f0e8;
+    --areia-clara: #fbf9f5;
+    --branco: #ffffff;
+    --texto: #21263a;
+    --texto-suave: #687083;
+    --borda: #e2dfd9;
+    --sucesso: #26745c;
+    --erro: #b42318;
+    --sombra: 0 24px 70px rgba(17, 22, 45, 0.16);
+    --raio: 22px;
+    --largura: 1160px;
+}
+
+/* ================================================================
+   2. RESET E ESTILOS GLOBAIS
+   Remove diferenças entre navegadores e define padrões acessíveis.
+   ================================================================ */
 * {
-    padding: 0;
+    box-sizing: border-box;
     margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 84px;
 }
 
 body {
-    background: #80808029;
-    font-family: 'Raleway', sans-serif;
+    background: var(--branco);
+    color: var(--texto);
+    font-family: "Manrope", sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
 }
 
-header {
-    width: 100%;
-    height: 55px;
-    background: #fff;
-    display: flex;
-    justify-content: center;
+body.menu-aberto {
+    overflow: hidden;
 }
 
-.topo {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: flex-start;
+img {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+button,
+a {
+    touch-action: manipulation;
+}
+
+/* Mantém o conteúdo centralizado sem encostar nas bordas da tela. */
+.container {
+    margin-inline: auto;
+    width: min(var(--largura), calc(100% - 40px));
+}
+
+/* Foco visível é essencial para navegação usando apenas o teclado. */
+:focus-visible {
+    outline: 3px solid #ffbf69;
+    outline-offset: 3px;
+}
+
+.pular-conteudo {
+    background: var(--azul);
+    border-radius: 8px;
+    color: var(--branco);
+    left: 16px;
+    padding: 10px 16px;
+    position: fixed;
+    top: -80px;
+    z-index: 1000;
+}
+
+.pular-conteudo:focus {
+    top: 12px;
+}
+
+/* ================================================================
+   3. COMPONENTES REUTILIZÁVEIS
+   Botões, etiquetas e títulos aparecem em várias seções.
+   ================================================================ */
+.botao {
     align-items: center;
-}
-
-.topo-logo {
-    width: 32px;
-    height: 32px;
-}
-
-.topo-titulo {
-    font-size: 24px;
-    color: #5d15d1;
-    margin: 0 0 0 10px;
-}
-
-.limite-largura
-{
-    max-width: 1024px;
-}
-
-.orcamento-fundo {
-    width: 100%;
-    height: auto;
-    background-image: url("../imagens/bahia.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-}
-
-.orcamento-area {
-    width: 100%;
-    height: auto;
-    margin: 0 auto;
-    padding: 50px 0;
-}
-
-.orcamento-cabecalho {
-    width: 100%;
-    height: 35px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #5d15d1;
-}
-
-.orcamento-logo {
-    width: 20px;
-    height: 20px;
-    transform: rotate(-45deg);
-}
-
-.orcamento-descricao {
-    font-size: 14px;
-    color: #fff;
-    margin: 0 0 0 5px;
-}
-
-
-.orcamento-area-formulario {
-    width: 100%;
-    background: #fff;
-    padding: 30px 25px 20px 25px;
-    box-sizing: border-box;
-}
-
-.orcamento-subtitulo-formulario {
-    font-size: 22px;
-    margin: 0 0 24px 0px;
-}
-
-.formulario {
-    display: flex;
-    flex-direction: column;
-}
-
-
-.formulario label {
-    font-size: 16px;
-}
-
-.formulario input, .formulario select {
-    width: 100%;
-    height: 32px;
-    margin: 10px 0;
-}
-
-.formulario input {
-    padding: 0 5px;
-    box-sizing: border-box;
-}
-
-.formulario select {
-    padding: 0 3px;
-}
-
-.formulario-campo-duplo {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-}
-
-.formulario-campo-duplo div {
-    width: calc(50% - 10px);
-}
-
-.radio {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-}
-
-.radio div {
-    display: flex;
-    align-items: center;
-    width: 120px;
-}
-
-.radio input {
-    width: 15px;
-}
-
-.radio label {
-    margin: 0 0 0 8px;
-}
-
-.formulario button {
-    width: 160px;
-    height: 32px;
-    border: none;
-    background: #5d15d1;
-    font-size: 16px;
-    color: #fff;
-    margin: 12px 0 0 0;
+    border: 0;
+    border-radius: 12px;
     cursor: pointer;
+    display: inline-flex;
+    font-size: 14px;
+    font-weight: 800;
+    gap: 10px;
+    justify-content: center;
+    min-height: 48px;
+    padding: 13px 21px;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
 }
 
-/* -------------------------- */
+.botao:hover {
+    transform: translateY(-2px);
+}
 
-.ofertas-area, .natureza-area {
-    width: 100%;
-    height: auto;
+.botao-principal,
+.botao-menu {
+    background: var(--laranja);
+    color: var(--branco);
+}
+
+.botao-principal:hover,
+.botao-menu:hover {
+    background: var(--laranja-escuro);
+    box-shadow: 0 12px 28px rgba(241, 107, 63, 0.26);
+}
+
+.botao-contorno {
+    border: 1px solid var(--azul);
+    color: var(--azul);
+}
+
+.botao-claro {
+    background: var(--branco);
+    color: var(--azul);
+    white-space: nowrap;
+}
+
+.etiqueta {
+    color: var(--laranja-escuro);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+}
+
+.etiqueta-clara {
+    color: #ffc2ae;
+}
+
+.secao {
+    padding: 100px 0;
+}
+
+.secao h2 {
+    font-size: clamp(32px, 4vw, 48px);
+    letter-spacing: -2px;
+    line-height: 1.12;
+    margin-top: 10px;
+}
+
+.secao-cabecalho {
+    align-items: end;
     display: flex;
+    justify-content: space-between;
+    margin-bottom: 42px;
+}
+
+.secao-cabecalho > p {
+    color: var(--texto-suave);
+    max-width: 480px;
+}
+
+.secao-cabecalho-central {
+    align-items: center;
     flex-direction: column;
-    margin: 32px auto 0 auto;
+    text-align: center;
 }
 
-.ofertas-titulo, .natureza-titulo {
-    font-size: 20px;
-    margin: 0 0 10px 0;
+.secao-cabecalho-central > p {
+    margin-top: 14px;
 }
 
-.ofertas-descricao, .natureza-descricao {
-    font-size: 16px;
-    font-weight: normal;
-    margin: 0 0 15px 0;
+/* ================================================================
+   4. CABEÇALHO E NAVEGAÇÃO
+   O cabeçalho fica visível durante a rolagem para facilitar conversão.
+   ================================================================ */
+.cabecalho {
+    backdrop-filter: blur(14px);
+    background: rgba(255, 255, 255, 0.95);
+    border-bottom: 1px solid rgba(23, 28, 53, 0.08);
+    height: 78px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-
-.ofertas-descricao span {
-    font-weight: bold;
-}
-
-.ofertas-imagens {
-    width: 100%;
-    height: 375px;
+.navegacao {
+    align-items: center;
     display: flex;
+    height: 100%;
     justify-content: space-between;
 }
 
-.oferta-imagem-destaque {
-    position: relative;
-    width: calc(50% - 10px);
-    height: 100%;
+.marca {
+    align-items: center;
+    display: inline-flex;
+    font-size: 22px;
+    font-weight: 800;
+    gap: 10px;
+    letter-spacing: -1px;
 }
 
-.oferta-quatro-imagens {
-    width: calc(50% - 10px);
-    height: 100%;
+.marca > span:last-child > span {
+    color: var(--laranja);
+}
+
+.marca-icone {
+    align-items: center;
+    background: var(--laranja);
+    border-radius: 50%;
+    color: var(--branco);
+    display: inline-flex;
+    height: 38px;
+    justify-content: center;
+    transform: rotate(18deg);
+    width: 38px;
+}
+
+.menu {
+    align-items: center;
+    display: flex;
+    font-size: 13px;
+    font-weight: 700;
+    gap: 28px;
+}
+
+.menu > a:not(.botao) {
+    position: relative;
+}
+
+.menu > a:not(.botao)::after {
+    background: var(--laranja);
+    bottom: -7px;
+    content: "";
+    height: 2px;
+    left: 0;
+    position: absolute;
+    right: 100%;
+    transition: right 0.2s;
+}
+
+.menu > a:not(.botao):hover::after {
+    right: 0;
+}
+
+.botao-menu {
+    min-height: 42px;
+    padding: 9px 17px;
+}
+
+/* O botão sanduíche só aparece nos breakpoints menores. */
+.menu-botao {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    display: none;
+    height: 44px;
+    padding: 10px;
+    width: 44px;
+}
+
+.menu-botao span {
+    background: var(--azul);
+    display: block;
+    height: 2px;
+    margin: 5px auto;
+    transition: opacity 0.25s, transform 0.25s;
+    width: 24px;
+}
+
+/* ================================================================
+   5. HERO E FORMULÁRIO DE LEAD
+   A imagem cria desejo; o card branco concentra a ação principal.
+   ================================================================ */
+.hero {
+    background-image: url("../imagens/bahia.jpg");
+    background-position: center;
+    background-size: cover;
+    min-height: 690px;
+    overflow: hidden;
+    position: relative;
+}
+
+.hero-sobreposicao {
+    background: linear-gradient(90deg, rgba(16, 22, 46, 0.94) 0%, rgba(16, 22, 46, 0.78) 48%, rgba(16, 22, 46, 0.36) 100%);
+    inset: 0;
+    position: absolute;
+}
+
+.hero-grid {
+    align-items: center;
+    display: grid;
+    gap: 70px;
+    grid-template-columns: 1fr 0.86fr;
+    min-height: 690px;
+    padding: 55px 0;
+    position: relative;
+}
+
+.hero-conteudo {
+    color: var(--branco);
+}
+
+.hero h1 {
+    font-size: clamp(48px, 5.4vw, 72px);
+    letter-spacing: -3.5px;
+    line-height: 1.02;
+    margin: 17px 0 22px;
+    max-width: 680px;
+}
+
+.hero h1 em {
+    color: #ffad91;
+    font-family: "Playfair Display", serif;
+    font-weight: 600;
+}
+
+.hero-texto {
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 17px;
+    max-width: 580px;
+}
+
+.hero-beneficios {
     display: flex;
     flex-wrap: wrap;
-    flex-direction: column;
-    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 700;
+    gap: 20px;
+    margin-top: 28px;
 }
 
-.oferta-quatro-imagens figure {
-    position: relative;
-    width: calc(50% - 10px);
-    height: calc(50% - 10px);
-    margin: 0 6px;
+.formulario-card {
+    background: var(--branco);
+    border-radius: var(--raio);
+    box-shadow: var(--sombra);
+    padding: 28px;
 }
 
-.oferta-imagem-destaque img, .oferta-quatro-imagens img {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-}
-
-.oferta-imagem-destaque figcaption, .oferta-quatro-imagens figcaption {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-
-    width: 100%;
-    background: rgb(0 0 0 / 50%);
-    font-size: 17px;
-    color: #fff;
-
-    padding: 5px 10px;
-    box-sizing: border-box;
-}
-
-.natureza-duas-imagens {
-    width: 100%;
-    height: auto;
-    display: flex;
-    justify-content: space-between;
-}
-
-.natureza-imagem {
-    width: calc(50% - 10px);
-    height: 100%;
-}
-
-.natureza-imagem img {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-}
-
-.natureza-imagem div {
-    width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-    background: #fff;
-}
-
-.natureza-imagem h3 {
-    font-size: 16px;
-}
-
-.natureza-imagem p {
-    color: grey;
-    font-size: 14px;
-    margin: 15px 0 0 0px;
-}
-
-footer {
-    width: 100%;
-    background: #5d15d1;
-    margin: 32px 0 0 0;
-}
-
-.rodape {
-    display: flex;
-    justify-content: space-between;
-    margin: 0 auto;
-}
-
-.rodape-conteudo {
-    display: flex;
-    flex-direction: column;
-    padding: 15px 0;
-}
-
-.rodape-conteudo h2 {
-    color: #fff;
-    margin: 0 0 15px 0;
-    font-size: 20px;
-}
-
-.rodape-conteudo div {
-    display: flex;
+.formulario-cabecalho {
     align-items: center;
-    margin: 5px 0;
+    border-bottom: 1px solid var(--borda);
+    display: flex;
+    gap: 14px;
+    margin-bottom: 22px;
+    padding-bottom: 20px;
 }
 
-.rodape-conteudo img {
-    width: 18px;
+.formulario-icone {
+    align-items: center;
+    background: #fff0e9;
+    border-radius: 13px;
+    color: var(--laranja);
+    display: flex;
+    font-size: 20px;
+    height: 48px;
+    justify-content: center;
+    transform: rotate(-12deg);
+    width: 48px;
 }
 
-.rodape-conteudo span {
-    color: #fff;
+.formulario-cabecalho p {
+    color: var(--laranja-escuro);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.3px;
+    text-transform: uppercase;
+}
+
+.formulario-cabecalho h2 {
+    font-size: 20px;
+    line-height: 1.25;
+}
+
+.formulario-linha {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: 1fr 1fr;
+}
+
+.campo {
+    margin-bottom: 14px;
+}
+
+.campo label {
+    display: block;
+    font-size: 11px;
+    font-weight: 800;
+    margin-bottom: 6px;
+}
+
+.campo input,
+.campo select {
+    background: var(--areia-clara);
+    border: 1px solid var(--borda);
+    border-radius: 9px;
+    color: var(--texto);
+    font-size: 12px;
+    height: 44px;
+    padding: 0 12px;
+    width: 100%;
+}
+
+.campo input:focus,
+.campo select:focus {
+    border-color: var(--laranja);
+    outline: 2px solid rgba(241, 107, 63, 0.15);
+}
+
+.campo input.invalido,
+.campo select.invalido {
+    border-color: var(--erro);
+}
+
+.consentimento {
+    align-items: flex-start;
+    color: var(--texto-suave);
+    cursor: pointer;
+    display: flex;
+    font-size: 10px;
+    gap: 8px;
+    margin: 1px 0 14px;
+}
+
+.consentimento input {
+    accent-color: var(--laranja);
+    margin-top: 3px;
+}
+
+.formulario .botao-principal {
+    width: 100%;
+}
+
+.formulario-seguranca {
+    color: var(--texto-suave);
+    font-size: 9px;
+    margin-top: 9px;
+    text-align: center;
+}
+
+.formulario-status {
+    font-size: 11px;
+    font-weight: 700;
+    margin-top: 8px;
+    min-height: 18px;
+    text-align: center;
+}
+
+.formulario-status.erro {
+    color: var(--erro);
+}
+
+.formulario-status.sucesso {
+    color: var(--sucesso);
+}
+
+/* ================================================================
+   6. NÚMEROS E DESTINOS
+   ================================================================ */
+.prova-social {
+    background: var(--azul);
+    color: var(--branco);
+}
+
+.numeros {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 25px 0;
+}
+
+.numeros div {
+    align-items: center;
+    border-right: 1px solid rgba(255, 255, 255, 0.14);
+    display: flex;
+    flex-direction: column;
+}
+
+.numeros div:last-child {
+    border-right: 0;
+}
+
+.numeros strong {
+    font-size: 19px;
+}
+
+.numeros span {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 10px;
+}
+
+.destinos {
+    background: var(--areia-clara);
+}
+
+.grade-destinos {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: 1.3fr 1fr 1fr;
+}
+
+.destino-card {
+    border-radius: var(--raio);
+    height: 390px;
+    overflow: hidden;
+    position: relative;
+}
+
+.destino-card img {
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+    width: 100%;
+}
+
+.destino-card:hover img {
+    transform: scale(1.045);
+}
+
+.destino-gradiente {
+    background: linear-gradient(0deg, rgba(10, 15, 35, 0.88), transparent 62%);
+    inset: 0;
+    position: absolute;
+}
+
+.destino-conteudo {
+    bottom: 0;
+    color: var(--branco);
+    display: flex;
+    flex-direction: column;
+    left: 0;
+    padding: 26px;
+    position: absolute;
+    right: 0;
+}
+
+.destino-conteudo small {
+    color: #ffc2ae;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.destino-conteudo strong {
+    font-size: 20px;
+    margin: 3px 0;
+}
+
+.destino-conteudo em {
+    font-size: 11px;
+    font-style: normal;
+}
+
+/* ================================================================
+   7. EXPERIÊNCIAS
+   ================================================================ */
+.grade-experiencias {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.experiencia-card {
+    border: 1px solid var(--borda);
+    border-radius: 18px;
+    padding: 28px 23px;
+    transition: border 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+
+.experiencia-card:hover {
+    border-color: transparent;
+    box-shadow: 0 18px 45px rgba(23, 28, 53, 0.1);
+    transform: translateY(-5px);
+}
+
+.experiencia-card > span {
+    align-items: center;
+    background: #fff0e9;
+    border-radius: 50%;
+    color: var(--laranja);
+    display: flex;
+    font-size: 23px;
+    height: 52px;
+    justify-content: center;
+    margin-bottom: 20px;
+    width: 52px;
+}
+
+.experiencia-card h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.experiencia-card p {
+    color: var(--texto-suave);
+    font-size: 12px;
+}
+
+/* ================================================================
+   8. VANTAGENS
+   ================================================================ */
+.vantagens {
+    background: var(--areia);
+}
+
+.vantagens-grid {
+    align-items: center;
+    display: grid;
+    gap: 85px;
+    grid-template-columns: 0.92fr 1.08fr;
+}
+
+.vantagens-imagem {
+    height: 540px;
+    position: relative;
+}
+
+.vantagens-imagem::before {
+    border: 2px solid var(--laranja);
+    border-radius: 45% 55% 48% 52%;
+    content: "";
+    inset: -14px 14px 14px -14px;
+    position: absolute;
+}
+
+.vantagens-imagem img {
+    border-radius: 45% 55% 48% 52%;
+    height: 100%;
+    object-fit: cover;
+    position: relative;
+    width: 100%;
+}
+
+.vantagens-selo {
+    align-items: center;
+    background: var(--laranja);
+    border: 6px solid var(--areia);
+    border-radius: 50%;
+    bottom: 28px;
+    color: var(--branco);
+    display: flex;
+    flex-direction: column;
+    font-size: 9px;
+    height: 95px;
+    justify-content: center;
+    position: absolute;
+    right: -25px;
+    text-transform: uppercase;
+    transform: rotate(-8deg);
+    width: 95px;
+}
+
+.vantagens-selo strong {
+    font-size: 21px;
+}
+
+.vantagens-conteudo h2 {
+    font-size: clamp(34px, 4vw, 48px);
+    letter-spacing: -2px;
+    line-height: 1.12;
+    margin: 10px 0 20px;
+}
+
+.vantagens-intro {
+    color: var(--texto-suave);
     font-size: 14px;
-    margin: 0 0 0 10px;
 }
 
-/*Responsavidade*/
+.lista-vantagens {
+    list-style: none;
+    margin: 27px 0 32px;
+}
 
-@media(max-width: 1100px)
-{
-    .limite-largura {
-        width: 90%;
+.lista-vantagens li {
+    border-bottom: 1px solid #d9d3c8;
+    display: flex;
+    gap: 16px;
+    padding: 14px 0;
+}
+
+.lista-vantagens li > span {
+    color: var(--laranja);
+    font-size: 11px;
+    font-weight: 800;
+    padding-top: 3px;
+}
+
+.lista-vantagens h3 {
+    font-size: 14px;
+}
+
+.lista-vantagens p {
+    color: var(--texto-suave);
+    font-size: 11px;
+    margin-top: 2px;
+}
+
+/* ================================================================
+   9. DEPOIMENTOS E CHAMADA FINAL
+   ================================================================ */
+.grade-depoimentos {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.grade-depoimentos blockquote {
+    background: var(--areia-clara);
+    border: 1px solid var(--borda);
+    border-radius: 18px;
+    padding: 27px;
+}
+
+.estrelas {
+    color: #e6a326;
+    font-size: 12px;
+    letter-spacing: 3px;
+}
+
+.grade-depoimentos blockquote > p {
+    color: #42495d;
+    font-size: 13px;
+    margin: 17px 0 24px;
+}
+
+.grade-depoimentos footer {
+    display: flex;
+    flex-direction: column;
+}
+
+.grade-depoimentos footer strong {
+    font-size: 12px;
+}
+
+.grade-depoimentos footer span {
+    color: var(--texto-suave);
+    font-size: 9px;
+}
+
+.chamada-final {
+    background: var(--laranja);
+    color: var(--branco);
+    overflow: hidden;
+    padding: 65px 0;
+    position: relative;
+}
+
+.chamada-final::after {
+    color: rgba(255, 255, 255, 0.1);
+    content: "✦";
+    font-size: 300px;
+    position: absolute;
+    right: 3%;
+    top: -145px;
+    transform: rotate(25deg);
+}
+
+.chamada-conteudo {
+    align-items: center;
+    display: flex;
+    gap: 45px;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+}
+
+.chamada-final .etiqueta {
+    color: #ffe2d8;
+}
+
+.chamada-final h2 {
+    font-size: clamp(32px, 4vw, 46px);
+    letter-spacing: -2px;
+    line-height: 1.15;
+    margin: 6px 0;
+}
+
+.chamada-final p:last-child {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 13px;
+}
+
+/* ================================================================
+   10. RODAPÉ
+   ================================================================ */
+.rodape {
+    background: var(--azul);
+    color: rgba(255, 255, 255, 0.68);
+    padding: 65px 0 20px;
+}
+
+.rodape-grid {
+    display: grid;
+    gap: 50px;
+    grid-template-columns: 1.5fr repeat(3, 1fr);
+}
+
+.marca-rodape {
+    color: var(--branco);
+    margin-bottom: 18px;
+}
+
+.rodape-marca > p {
+    font-size: 12px;
+    max-width: 290px;
+}
+
+.rodape-coluna {
+    display: flex;
+    flex-direction: column;
+    font-size: 11px;
+    gap: 9px;
+}
+
+.rodape-coluna h2 {
+    color: var(--branco);
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.rodape-coluna a:hover {
+    color: var(--branco);
+}
+
+.rodape-final {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    font-size: 9px;
+    justify-content: space-between;
+    margin-top: 42px;
+    padding-top: 18px;
+}
+
+/* ================================================================
+   11. TABLETS E TELAS INTERMEDIÁRIAS
+   O menu vira painel lateral e os grids passam a ter menos colunas.
+   ================================================================ */
+@media (max-width: 920px) {
+    .menu-botao {
+        display: block;
+        position: relative;
+        z-index: 102;
+    }
+
+    .menu {
+        align-items: flex-start;
+        background: var(--branco);
+        box-shadow: -20px 0 50px rgba(17, 22, 45, 0.18);
+        flex-direction: column;
+        gap: 24px;
+        height: 100vh;
+        padding: 100px 34px 34px;
+        position: fixed;
+        right: -100%;
+        top: 0;
+        transition: right 0.3s;
+        width: min(340px, 86vw);
+        z-index: 101;
+    }
+
+    .menu.aberto {
+        right: 0;
+    }
+
+    .menu a {
+        font-size: 16px;
+        width: 100%;
+    }
+
+    .menu .botao {
+        margin-top: 8px;
+    }
+
+    /* Transforma as três barras do botão em um X. */
+    .menu-botao.ativo span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+    }
+
+    .menu-botao.ativo span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-botao.ativo span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+    }
+
+    .hero-grid {
+        gap: 35px;
+        grid-template-columns: 1fr 0.9fr;
+    }
+
+    .hero h1 {
+        font-size: 48px;
+    }
+
+    .grade-destinos {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .destino-destaque {
+        grid-column: 1 / -1;
+    }
+
+    .grade-experiencias {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .vantagens-grid {
+        gap: 55px;
+    }
+
+    .rodape-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 }
 
-@media(max-width: 768px)
-{
-   .formulario button {
-        width: 100%;
+/* ================================================================
+   12. CELULARES
+   Tipografia compacta, imagens preservadas e campos em uma coluna.
+   ================================================================ */
+@media (max-width: 700px) {
+    .container {
+        width: min(var(--largura), calc(100% - 30px));
     }
 
-    .ofertas-imagens {
-        height: 100%;
+    .cabecalho {
+        height: 70px;
+    }
+
+    .hero {
+        background-position: 58% center;
+    }
+
+    .hero-sobreposicao {
+        background: linear-gradient(180deg, rgba(16, 22, 46, 0.9) 0%, rgba(16, 22, 46, 0.7) 47%, rgba(16, 22, 46, 0.87) 100%);
+    }
+
+    .hero-grid {
+        gap: 28px;
+        grid-template-columns: 1fr;
+        min-height: auto;
+        padding: 46px 0;
+    }
+
+    .hero h1 {
+        font-size: clamp(36px, 11vw, 44px);
+        letter-spacing: -2px;
+        margin: 12px 0 16px;
+        max-width: 520px;
+    }
+
+    .hero-texto {
+        font-size: 14px;
+        line-height: 1.55;
+    }
+
+    .hero-beneficios {
+        font-size: 10px;
+        gap: 10px 18px;
+        margin-top: 18px;
+    }
+
+    .formulario-card {
+        padding: 21px;
+    }
+
+    .formulario-cabecalho h2 {
+        font-size: 17px;
+    }
+
+    .formulario-linha {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .campo input,
+    .campo select {
+        font-size: 13px;
+        height: 46px;
+    }
+
+    .numeros {
+        gap: 0;
+        grid-template-columns: repeat(2, 1fr);
+        padding: 12px 0;
+    }
+
+    .numeros div {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        padding: 10px 4px;
+    }
+
+    .numeros div:nth-child(2) {
+        border-right: 0;
+    }
+
+    .numeros div:nth-child(3),
+    .numeros div:nth-child(4) {
+        border-bottom: 0;
+    }
+
+    .numeros strong {
+        font-size: 16px;
+    }
+
+    .numeros span {
+        font-size: 9px;
+    }
+
+    .secao {
+        padding: 68px 0;
+    }
+
+    .secao h2,
+    .vantagens-conteudo h2 {
+        font-size: 31px;
+        letter-spacing: -1.3px;
+    }
+
+    .secao-cabecalho {
+        align-items: flex-start;
         flex-direction: column;
+        margin-bottom: 27px;
     }
 
-    .oferta-quatro-imagens {
-        width: 100%;
+    .secao-cabecalho > p {
+        font-size: 13px;
+        margin-top: 12px;
     }
 
-    .oferta-imagem-destaque, .oferta-quatro-imagens figure {
-        width: 100%;
-        height: 225px;
-        margin: 15px 0 0 0;
-    }
-
-    .natureza-duas-imagens {
-        flex-direction: column;
-    }
-
-    .natureza-imagem {
-        width: 100%;
-        margin: 15px 0 0 0;
-    }
-
-    .rodape {
-        flex-direction: column;
+    .secao-cabecalho-central {
         align-items: center;
     }
 
-    .rodape-conteudo
-    {
-        width: 250px;
+    .grade-destinos {
+        grid-template-columns: 1fr;
     }
+
+    .destino-destaque {
+        grid-column: auto;
+    }
+
+    /* Cartões menores mantêm as imagens presentes sem dominar a tela. */
+    .destino-card {
+        height: 275px;
+    }
+
+    .destino-conteudo {
+        padding: 20px;
+    }
+
+    .destino-conteudo strong {
+        font-size: 17px;
+    }
+
+    .grade-experiencias,
+    .grade-depoimentos {
+        grid-template-columns: 1fr;
+    }
+
+    .experiencia-card {
+        align-items: center;
+        display: grid;
+        gap: 4px 15px;
+        grid-template-columns: auto 1fr;
+        padding: 20px;
+    }
+
+    .experiencia-card > span {
+        grid-row: 1 / 3;
+        margin: 0;
+    }
+
+    .experiencia-card p {
+        font-size: 11px;
+    }
+
+    .vantagens-grid {
+        gap: 48px;
+        grid-template-columns: 1fr;
+    }
+
+    .vantagens-imagem {
+        height: 360px;
+        margin: 0 10px;
+    }
+
+    .vantagens-selo {
+        right: -10px;
+    }
+
+    .vantagens-intro {
+        font-size: 13px;
+    }
+
+    .chamada-conteudo {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 25px;
+    }
+
+    .chamada-final h2 {
+        font-size: 31px;
+    }
+
+    .botao-claro {
+        white-space: normal;
+        width: 100%;
+    }
+
+    .rodape-grid {
+        gap: 30px;
+        grid-template-columns: 1fr;
+    }
+
+    .rodape-final {
+        flex-direction: column;
+        gap: 6px;
+        align-items: center;
+    }
+
+    .rodape-coluna {
+        align-items: center;
+    }
+
+
 }
 
-@media(max-width: 540px)
-{
-    .formulario-campo-duplo, .radio {
-        flex-direction: column;
+/* ================================================================
+   13. ACESSIBILIDADE DE MOVIMENTO
+   Respeita usuários que preferem reduzir animações no sistema.
+   ================================================================ */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
     }
 
-    .formulario-campo-duplo div, .radio div {
-        width: 100%;
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
     }
 }
