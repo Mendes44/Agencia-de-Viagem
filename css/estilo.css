@@ -428,6 +428,64 @@ a {
     border-color: var(--erro);
 }
 
+/* Realça o destino quando ele é preenchido por um cartão da página. */
+.campo select.destino-preenchido {
+    animation: destacar-destino 0.9s ease-out;
+}
+
+@keyframes destacar-destino {
+    0%, 45% {
+        background: #fff0e9;
+        border-color: var(--laranja);
+        box-shadow: 0 0 0 4px rgba(241, 107, 63, 0.15);
+    }
+
+    100% {
+        background: var(--areia-clara);
+        border-color: var(--borda);
+        box-shadow: none;
+    }
+}
+
+/*
+   A opção de data flexível fica visualmente ligada ao calendário,
+   mas usa um checkbox nativo para continuar acessível pelo teclado.
+*/
+.data-flexivel {
+    align-items: center;
+    color: var(--texto-suave);
+    cursor: pointer;
+    display: flex;
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    gap: 7px;
+    margin: 7px 0 0 !important;
+}
+
+.data-flexivel input {
+    accent-color: var(--laranja);
+    height: 15px;
+    width: 15px;
+}
+
+/* Anima discretamente a área quando ela deixa de estar oculta. */
+.campo-flexibilidade:not([hidden]) {
+    animation: mostrar-campo 0.2s ease-out;
+    margin-top: 1px;
+}
+
+@keyframes mostrar-campo {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .consentimento {
     align-items: flex-start;
     color: var(--texto-suave);

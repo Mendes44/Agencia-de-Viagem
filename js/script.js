@@ -56,6 +56,78 @@ window.addEventListener('resize', () => {
    ================================================================ */
 const formulario = document.querySelector('[data-lead-form]');
 const statusFormulario = document.querySelector('[data-form-status]');
+const campoData = document.querySelector('#data-viagem');
+const opcaoDataFlexivel = document.querySelector('#data-flexivel');
+const grupoFlexibilidade = document.querySelector('#opcoes-flexibilidade');
+const campoFlexibilidade = document.querySelector('#flexibilidade');
+const campoDestino = document.querySelector('#destino');
+const cartoesDestino = document.querySelectorAll('[data-destino]');
+
+/*
+ * Impede a seleção de datas anteriores ao dia atual.
+ * toISOString retorna UTC; o ajuste do fuso mantém a data correta no Brasil.
+ */
+const agora = new Date();
+const dataLocal = new Date(agora.getTime() - agora.getTimezoneOffset() * 60000);
+campoData.min = dataLocal.toISOString().split('T')[0];
+
+/**
+ * Alterna entre uma data obrigatória e uma preferência flexível.
+ * Se houver flexibilidade, o calendário passa a ser opcional e surge um select.
+ */
+function atualizarDataFlexivel() {
+    const aceitaFlexibilidade = opcaoDataFlexivel.checked;
+
+    grupoFlexibilidade.hidden = !aceitaFlexibilidade;
+    campoFlexibilidade.disabled = !aceitaFlexibilidade;
+    campoFlexibilidade.required = aceitaFlexibilidade;
+    campoData.required = !aceitaFlexibilidade;
+
+    /* Evita enviar uma escolha antiga quando o usuário desmarca a opção. */
+    if (!aceitaFlexibilidade) {
+        campoFlexibilidade.value = '';
+    }
+}
+
+opcaoDataFlexivel.addEventListener('change', atualizarDataFlexivel);
+
+/* ================================================================
+   PREENCHIMENTO PELOS CARTÕES DE DESTINO
+   O atributo data-destino de cada cartão corresponde ao value da option.
+   Assim, novos destinos podem ser ligados ao formulário sem mudar esta lógica.
+   ================================================================ */
+cartoesDestino.forEach((cartao) => {
+    cartao.addEventListener('click', (evento) => {
+        evento.preventDefault();
+
+        const destinoEscolhido = cartao.dataset.destino;
+        const opcaoCorrespondente = campoDestino.querySelector(`option[value="${destinoEscolhido}"]`);
+
+        /* Interrompe com segurança se o cartão não tiver uma option correspondente. */
+        if (!opcaoCorrespondente) {
+            return;
+        }
+
+        campoDestino.value = destinoEscolhido;
+        campoDestino.classList.remove('invalido');
+
+        /* Reinicia a animação mesmo quando o usuário escolhe o mesmo destino novamente. */
+        campoDestino.classList.remove('destino-preenchido');
+        void campoDestino.offsetWidth;
+        campoDestino.classList.add('destino-preenchido');
+
+        /* Centraliza o campo preenchido; isso funciona melhor em telas pequenas. */
+        campoDestino.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        /*
+         * Depois da rolagem, leva o usuário ao próximo passo do formulário.
+         * O tempo curto permite que ele veja qual destino foi selecionado.
+         */
+        window.setTimeout(() => {
+            campoData.focus({ preventScroll: true });
+        }, 650);
+    });
+});
 
 /** Remove mensagens e bordas de erro antes de uma nova tentativa. */
 function limparErros() {
@@ -113,6 +185,8 @@ formulario.addEventListener('submit', async (evento) => {
         statusFormulario.textContent = 'Formulário validado! Conecte o Supabase para registrar este lead.';
         statusFormulario.classList.add('sucesso');
         formulario.reset();
+        /* reset() não dispara o evento change; sincronizamos a interface manualmente. */
+        atualizarDataFlexivel();
     } catch (erro) {
         statusFormulario.textContent = 'Não foi possível enviar agora. Tente novamente em instantes.';
         statusFormulario.classList.add('erro');

@@ -147,10 +147,37 @@
                                     <option value="outro">Ainda não decidi</option>
                                 </select>
                             </div>
-                            <div class="campo">
+                            <div class="campo campo-data">
                                 <label for="data-viagem">Quando pretende viajar?</label>
-                                <input id="data-viagem" type="month" name="data_viagem" required>
+
+                                <!--
+                                    type="date" abre o calendário nativo e envia a data completa
+                                    no formato AAAA-MM-DD, ideal para salvar posteriormente no Supabase.
+                                -->
+                                <input id="data-viagem" type="date" name="data_viagem" required>
+
+                                <!-- O viajante pode informar que não possui uma data exata. -->
+                                <label class="data-flexivel" for="data-flexivel">
+                                    <input id="data-flexivel" type="checkbox" name="data_flexivel" value="sim" aria-controls="opcoes-flexibilidade">
+                                    <span>Tenho datas flexíveis</span>
+                                </label>
                             </div>
+                        </div>
+
+                        <!--
+                            Este campo começa oculto e só aparece quando a opção acima é marcada.
+                            Enquanto estiver desabilitado, ele não será enviado junto com o formulário.
+                        -->
+                        <div class="campo campo-flexibilidade" id="opcoes-flexibilidade" hidden>
+                            <label for="flexibilidade">Qual é a sua flexibilidade?</label>
+                            <select id="flexibilidade" name="flexibilidade" disabled>
+                                <option value="" selected disabled>Selecione uma opção</option>
+                                <option value="3-dias">Até 3 dias antes ou depois</option>
+                                <option value="7-dias">Até 7 dias antes ou depois</option>
+                                <option value="14-dias">Até 14 dias antes ou depois</option>
+                                <option value="mes-inteiro">Qualquer data dentro do mês</option>
+                                <option value="sem-data">Ainda não tenho uma data definida</option>
+                            </select>
                         </div>
 
                         <label class="consentimento" for="consentimento">
@@ -172,7 +199,7 @@
             <div class="container numeros">
                 <div><strong>+5 mil</strong><span>viajantes felizes</span></div>
                 <div><strong>12 anos</strong><span>criando histórias</span></div>
-                <div><strong>4,9/5</strong><span>avaliação dos clientes</span></div>
+                <div><strong>5/5</strong><span>avaliação dos clientes</span></div>
                 <div><strong>24h</strong><span>de suporte em viagem</span></div>
             </div>
         </section>
@@ -189,17 +216,18 @@
                 </div>
 
                 <div class="grade-destinos">
-                    <a class="destino-card destino-destaque" href="#orcamento">
+                    <!-- data-destino deve possuir o mesmo valor de uma option do formulário. -->
+                    <a class="destino-card destino-destaque" href="#orcamento" data-destino="rio-de-janeiro" aria-label="Selecionar Rio de Janeiro e solicitar cotação">
                         <img src="imagens/rio.jpg" alt="Vista aérea do Rio de Janeiro entre mar e montanhas" width="1600" height="1200" loading="lazy">
                         <span class="destino-gradiente"></span>
                         <span class="destino-conteudo"><small>Rio de Janeiro</small><strong>Cidade Maravilhosa</strong><em>A partir de R$ 1.490</em></span>
                     </a>
-                    <a class="destino-card" href="#orcamento">
+                    <a class="destino-card" href="#orcamento" data-destino="amazonia" aria-label="Selecionar Amazônia e solicitar cotação">
                         <img src="imagens/manaus.jpg" alt="Encontro das águas próximo a Manaus, Amazonas" width="2048" height="1253" loading="lazy">
                         <span class="destino-gradiente"></span>
                         <span class="destino-conteudo"><small>Amazonas</small><strong>Encantos da Amazônia</strong><em>A partir de R$ 2.190</em></span>
                     </a>
-                    <a class="destino-card" href="#orcamento">
+                    <a class="destino-card" href="#orcamento" data-destino="lencois-maranhenses" aria-label="Selecionar Lençóis Maranhenses e solicitar cotação">
                         <img src="imagens/maranhao.jpg" alt="Lagoas entre dunas nos Lençóis Maranhenses" width="750" height="541" loading="lazy">
                         <span class="destino-gradiente"></span>
                         <span class="destino-conteudo"><small>Maranhão</small><strong>Lençóis Maranhenses</strong><em>A partir de R$ 1.890</em></span>
